@@ -102,6 +102,15 @@
 }
 
 userdata(); // ← THIS WAS MISSING
+let num=[3,4,5,6,7];
+let square=num.map(n=>n*2);
+console.log(square);
+
+// The reduce() method in JavaScript is a powerful array function 
+// that executes a user-supplied "reducer" callback function on 
+// each element of an array, resulting in a single output value.
+let sum=num.reduce((total,n)=>total+n);
+console.log(sum);
         
 
     </script>
