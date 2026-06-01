@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon.in: Online Shopping - Electronics, Clothing, Books & More</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: Arial, sans-serif; font-size: 13px; background: #EAEDED; color: #0F1111; }
+  a { text-decoration: none; color: inherit; }
+
+  /* NAVBAR */
+  .navbar { background: #131921; color: #fff; display: flex; align-items: center; padding: 8px 12px; gap: 10px; position: sticky; top: 0; z-index: 100; }
+  .nav-logo-text { color: #fff; font-size: 22px; font-weight: bold; letter-spacing: -1px; border: 1px solid transparent; padding: 4px 6px; cursor: pointer; }
+  .nav-logo-text:hover { border-color: #fff; border-radius: 2px; }
+  .nav-logo-text span { color: #FF9900; }
+  .nav-deliver { display: flex; flex-direction: column; padding: 4px 6px; cursor: pointer; border: 1px solid transparent; min-width: 110px; }
+  .nav-deliver:hover { border-color: #fff; border-radius: 2px; }
+  .nav-deliver .top { font-size: 11px; color: #ccc; }
+  .nav-deliver .bottom { font-size: 13px; font-weight: bold; }
+  .nav-search { flex: 1; display: flex; border-radius: 4px; overflow: hidden; max-width: 900px; }
+  .nav-search select { background: #F3F3F3; border: none; padding: 0 8px; font-size: 12px; color: #333; cursor: pointer; }
+  .nav-search input { flex: 1; border: none; padding: 8px 12px; font-size: 14px; outline: none; }
+  .nav-search button { background: #FF9900; border: none; padding: 0 14px; cursor: pointer; }
+  .nav-search button:hover { background: #e88a00; }
+  .nav-search button svg { width: 20px; height: 20px; fill: #131921; vertical-align: middle; }
+  .nav-flag { padding: 4px 6px; font-size: 22px; cursor: pointer; border: 1px solid transparent; }
+  .nav-flag:hover { border-color: #fff; border-radius: 2px; }
+  .nav-account { display: flex; flex-direction: column; padding: 4px 6px; cursor: pointer; border: 1px solid transparent; min-width: 100px; }
+  .nav-account:hover { border-color: #fff; border-radius: 2px; }
+  .nav-account .top { font-size: 11px; color: #ccc; }
+  .nav-account .bottom { font-size: 13px; font-weight: bold; }
+  .nav-returns { display: flex; flex-direction: column; padding: 4px 6px; cursor: pointer; border: 1px solid transparent; }
+  .nav-returns:hover { border-color: #fff; border-radius: 2px; }
+  .nav-returns .top { font-size: 11px; color: #ccc; }
+  .nav-returns .bottom { font-size: 13px; font-weight: bold; }
+  .nav-cart { display: flex; align-items: center; gap: 4px; padding: 4px 6px; cursor: pointer; border: 1px solid transparent; }
+  .nav-cart:hover { border-color: #fff; border-radius: 2px; }
+  .cart-icon { position: relative; }
+  .cart-icon svg { width: 34px; height: 34px; fill: #fff; }
+  .cart-badge { position: absolute; top: -4px; right: -4px; background: #FF9900; color: #131921; font-size: 12px; font-weight: bold; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .cart-label { font-size: 13px; font-weight: bold; color: #fff; }
+
+  /* SUB NAV */
+  .sub-nav { background: #232F3E; color: #fff; display: flex; align-items: center; padding: 6px 12px; gap: 2px; overflow-x: auto; white-space: nowrap; }
+  .sub-nav::-webkit-scrollbar { display: none; }
+  .sub-nav a, .sub-nav span { padding: 6px 10px; font-size: 13px; border: 1px solid transparent; border-radius: 2px; cursor: pointer; display: inline-block; color: #fff; }
+  .sub-nav a:hover, .sub-nav span:hover { border-color: #fff; }
+  .sub-nav .all { font-weight: bold; display: flex; align-items: center; gap: 5px; }
+
+  /* HERO */
+  .hero { position: relative; overflow: hidden; background: #131921; }
+  .hero-slides { display: flex; transition: transform 0.6s ease; }
+  .hero-slide { min-width: 100%; height: 400px; position: relative; overflow: hidden; }
+  .hero-slide img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-overlay { position: absolute; inset: 0; display: flex; align-items: center; padding: 40px 80px; }
+  .hero-text { background: rgba(0,0,0,0.55); padding: 28px 36px; border-radius: 8px; color: #fff; max-width: 400px; }
+  .hero-text h2 { font-size: 28px; margin-bottom: 8px; }
+  .hero-text p { font-size: 14px; margin-bottom: 18px; color: #ddd; }
+  .hero-text button { background: #FF9900; border: none; padding: 10px 24px; font-size: 14px; font-weight: bold; cursor: pointer; border-radius: 4px; }
+  .hero-text button:hover { background: #e88a00; }
+  .hero-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.8); border: none; width: 38px; height: 90px; font-size: 20px; cursor: pointer; z-index: 10; }
+  .hero-arrow:hover { background: #fff; }
+  .hero-arrow.left { left: 0; border-radius: 0 4px 4px 0; }
+  .hero-arrow.right { right: 0; border-radius: 4px 0 0 4px; }
+  .hero-dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; }
+  .dot.active { background: #fff; }
+  .hero-fade { position: absolute; bottom: 0; left: 0; right: 0; height: 60px; background: linear-gradient(transparent, #EAEDED); }
+
+  /* MAIN */
+  .main { max-width: 1500px; margin: 0 auto; padding: 16px 12px; }
+
+  /* DEAL GRID */
+  .deal-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 16px; }
+  .deal-card { background: #fff; padding: 16px; border-radius: 4px; cursor: pointer; }
+  .deal-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
+  .deal-card h3 { font-size: 17px; font-weight: bold; margin-bottom: 12px; color: #0F1111; }
+  .deal-card .products { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .deal-card .prod-img { width: 100%; aspect-ratio: 1; object-fit: contain; background: #f7f7f7; border-radius: 2px; }
+  .deal-card .see-more { display: block; margin-top: 12px; font-size: 13px; color: #007185; }
+  .deal-card .see-more:hover { color: #c45500; text-decoration: underline; }
+
+  /* CAROUSEL */
+  .carousel-section { background: #fff; border-radius: 4px; padding: 18px; margin-bottom: 16px; position: relative; }
+  .carousel-section h2 { font-size: 20px; font-weight: bold; margin-bottom: 14px; }
+  .carousel-wrap { position: relative; }
+  .carousel { display: flex; gap: 0; overflow: hidden; }
+  .carousel-inner { display: flex; gap: 12px; transition: transform 0.4s ease; padding: 4px; }
+  .car-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.95); border: 1px solid #ddd; width: 36px; height: 80px; font-size: 18px; cursor: pointer; z-index: 5; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+  .car-btn:hover { background: #f5f5f5; }
+  .car-btn.left { left: -18px; border-radius: 0 4px 4px 0; }
+  .car-btn.right { right: -18px; border-radius: 4px 0 0 4px; }
+
+  /* PRODUCT CARD */
+  .product-card { min-width: 182px; max-width: 182px; cursor: pointer; padding: 8px; border-radius: 4px; border: 1px solid transparent; }
+  .product-card:hover { border-color: #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+  .product-card .img-wrap { width: 100%; height: 180px; display: flex; align-items: center; justify-content: center; background: #f9f9f9; border-radius: 2px; margin-bottom: 8px; overflow: hidden; }
+  .product-card .img-wrap img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .product-card .name { font-size: 13px; color: #0F1111; margin-bottom: 4px; line-height: 1.4; height: 36px; overflow: hidden; }
+  .product-card .brand { font-size: 12px; color: #565959; margin-bottom: 3px; }
+  .product-card .stars { color: #FF9900; font-size: 12px; }
+  .product-card .rcount { color: #007185; font-size: 11px; margin-left: 3px; }
+  .product-card .price-row { margin-top: 4px; }
+  .product-card .price-row .sym { font-size: 11px; vertical-align: top; margin-top: 2px; display: inline-block; color: #0F1111; }
+  .product-card .price-row .amt { font-size: 17px; font-weight: bold; color: #0F1111; }
+  .product-card .price-row .orig { font-size: 12px; color: #555; text-decoration: line-through; margin-left: 4px; }
+  .product-card .price-row .off { font-size: 12px; color: #CC0C39; margin-left: 3px; }
+  .product-card .prime { color: #00A8E0; font-size: 11px; font-weight: bold; margin-top: 3px; }
+  .product-card .add-btn { width: 100%; margin-top: 8px; background: #FFD814; border: 1px solid #FCD200; padding: 5px; font-size: 12px; cursor: pointer; border-radius: 20px; font-weight: 500; }
+  .product-card .add-btn:hover { background: #F7CA00; }
+
+  /* BANNER STRIP */
+  .banner-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px; }
+  .banner-card { background: #fff; border-radius: 4px; overflow: hidden; cursor: pointer; }
+  .banner-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
+  .banner-card img { width: 100%; height: 180px; object-fit: cover; }
+  .banner-info { padding: 12px 16px; }
+  .banner-info h3 { font-size: 16px; font-weight: bold; margin-bottom: 4px; }
+  .banner-info a { font-size: 13px; color: #007185; }
+  .banner-info a:hover { text-decoration: underline; color: #c45500; }
+
+  /* PROMO */
+  .promo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .promo-banner { border-radius: 4px; height: 180px; display: flex; align-items: center; padding: 28px; color: #fff; cursor: pointer; }
+  .promo-banner h2 { font-size: 26px; font-weight: bold; line-height: 1.2; margin-bottom: 6px; }
+  .promo-banner p { font-size: 13px; margin-bottom: 14px; }
+  .promo-banner button { background: #FF9900; border: none; padding: 9px 20px; font-size: 13px; font-weight: bold; cursor: pointer; border-radius: 4px; color: #0F1111; }
+
+  /* CATEGORY */
+  .category-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 16px; }
+  .cat-card { background: #fff; border-radius: 4px; overflow: hidden; cursor: pointer; text-align: center; padding-bottom: 12px; }
+  .cat-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+  .cat-card img { width: 100%; height: 130px; object-fit: cover; }
+  .cat-card .name { font-size: 13px; font-weight: bold; margin-top: 8px; padding: 0 6px; }
+
+  /* TODAY'S DEALS */
+  .deals-section { background: #fff; border-radius: 4px; padding: 18px; margin-bottom: 16px; }
+  .deals-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .deals-header h2 { font-size: 20px; font-weight: bold; }
+  .deals-header a { color: #007185; font-size: 13px; }
+  .deals-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .deal-item { border: 1px solid #ddd; border-radius: 4px; padding: 12px; text-align: center; cursor: pointer; }
+  .deal-item:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.12); border-color: #aaa; }
+  .deal-item .img-wrap { height: 130px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; background: #f9f9f9; border-radius: 3px; overflow: hidden; }
+  .deal-item .img-wrap img { max-height: 120px; max-width: 100%; object-fit: contain; }
+  .deal-item .badge { background: #CC0C39; color: #fff; font-size: 11px; font-weight: bold; padding: 2px 8px; border-radius: 2px; display: inline-block; margin-bottom: 5px; }
+  .deal-item .title { font-size: 12px; color: #0F1111; margin-bottom: 4px; line-height: 1.3; min-height: 30px; }
+  .deal-item .price { font-size: 16px; font-weight: bold; }
+  .deal-item .was { font-size: 11px; color: #555; text-decoration: line-through; }
+  .deal-item .progress-bar { background: #f0f0f0; border-radius: 2px; height: 5px; margin-top: 7px; }
+  .deal-item .progress { background: #CC0C39; height: 5px; border-radius: 2px; }
+  .deal-item .claimed { font-size: 11px; color: #CC0C39; margin-top: 3px; }
+
+  /* FOOTER */
+  footer { background: #37475A; color: #fff; margin-top: 24px; }
+  .footer-back { background: #232F3E; text-align: center; padding: 15px; font-size: 13px; cursor: pointer; }
+  .footer-back:hover { background: #3a4f63; }
+  .footer-links { display: grid; grid-template-columns: repeat(4, 1fr); padding: 28px 80px; gap: 20px; max-width: 1500px; margin: 0 auto; }
+  .footer-col h3 { font-size: 15px; font-weight: bold; margin-bottom: 12px; }
+  .footer-col a { display: block; color: #ccc; font-size: 13px; margin-bottom: 8px; }
+  .footer-col a:hover { text-decoration: underline; }
+  .footer-bottom { background: #131921; text-align: center; padding: 18px; }
+  .footer-logo { font-size: 22px; font-weight: bold; letter-spacing: -1px; color: #fff; margin-bottom: 10px; }
+  .footer-logo span { color: #FF9900; }
+  .footer-legal { color: #999; font-size: 12px; }
+  .footer-legal a { color: #999; margin: 0 8px; }
+  .footer-legal a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="nav-logo-text">amazon<span>.</span>in</div>
+  <div class="nav-deliver">
+    <span class="top">📍 Deliver to</span>
+    <span class="bottom">India ▾</span>
+  </div>
+  <div class="nav-search">
+    <select>
+      <option>All</option><option>Electronics</option><option>Mobiles</option>
+      <option>Clothing</option><option>Books</option><option>Home</option>
+      <option>Sports</option><option>Toys</option><option>Grocery</option>
+    </select>
+    <input type="text" placeholder="Search Amazon.in" />
+    <button><svg viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" stroke="#131921" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg></button>
+  </div>
+  <div class="nav-flag">🇮🇳</div>
+  <div class="nav-account">
+    <span class="top">Hello, sign in</span>
+    <span class="bottom">Account &amp; Lists ▾</span>
+  </div>
+  <div class="nav-returns">
+    <span class="top">Returns</span>
+    <span class="bottom">&amp; Orders</span>
+  </div>
+  <div class="nav-cart">
+    <div class="cart-icon">
+      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"/></svg>
+      <div class="cart-badge">2</div>
+    </div>
+    <span class="cart-label">Cart</span>
+  </div>
+</header>
+
+<!-- SUB NAV -->
+<nav class="sub-nav">
+  <span class="all">☰ All</span>
+  <a href="#">Today's Deals</a><a href="#">Mobiles</a><a href="#">Electronics</a>
+  <a href="#">Fashion</a><a href="#">Prime</a><a href="#">Home &amp; Kitchen</a>
+  <a href="#">Books</a><a href="#">Toys</a><a href="#">Sports</a>
+  <a href="#">Grocery</a><a href="#">Beauty</a><a href="#">Health</a>
+  <a href="#">New Releases</a><a href="#">Customer Service</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-slides" id="heroSlides">
+    <div class="hero-slide">
+      <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1400&q=80" alt="Sale">
+      <div class="hero-overlay">
+        <div class="hero-text">
+          <h2>🔥 Great Indian Festival</h2>
+          <p>Biggest deals on Electronics, Fashion & More. Limited time offers!</p>
+          <button>Shop Now</button>
+        </div>
+      </div>
+    </div>
+    <div class="hero-slide">
+      <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1400&q=80" alt="Electronics">
+      <div class="hero-overlay">
+        <div class="hero-text">
+          <h2>📱 New Mobiles Launch</h2>
+          <p>Latest smartphones at unbeatable prices with Prime delivery.</p>
+          <button>Explore Now</button>
+        </div>
+      </div>
+    </div>
+    <div class="hero-slide">
+      <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1400&q=80" alt="Fashion">
+      <div class="hero-overlay">
+        <div class="hero-text">
+          <h2>👗 Fashion Sale</h2>
+          <p>Up to 70% off on Clothing, Shoes & Accessories for all.</p>
+          <button>Buy Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="hero-arrow left" onclick="slideHero(-1)">&#10094;</button>
+  <button class="hero-arrow right" onclick="slideHero(1)">&#10095;</button>
+  <div class="hero-dots" id="heroDots">
+    <div class="dot active" onclick="goSlide(0)"></div>
+    <div class="dot" onclick="goSlide(1)"></div>
+    <div class="dot" onclick="goSlide(2)"></div>
+  </div>
+  <div class="hero-fade"></div>
+</div>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- DEAL GRID -->
+  <div class="deal-grid">
+    <div class="deal-card">
+      <h3>Top Picks in Electronics</h3>
+      <div class="products">
+        <img class="prod-img" src="https://images-na.ssl-images-amazon.com/images/I/71gVbEBpFFL._AC_UL320_.jpg" alt="Phone" onerror="this.src='https://via.placeholder.com/150'">
+        <img class="prod-img" src="https://images-na.ssl-images-amazon.com/images/I/71jG+e7roXL._AC_UL320_.jpg" alt="Laptop" onerror="this.src='https://via.placeholder.com/150'">
+        <img class="prod-img" src="https://images-na.ssl-images-amazon.com/images/I/61CGHv6kmWL._AC_UL320_.jpg" alt="Headphones" onerror="this.src='https://via.placeholder.com/150'">
+        <img class="prod-img" src="https://images-na.ssl-images-amazon.com/images/I/71V5JopkfLL._AC_UL320_.jpg" alt="Watch" onerror="this.src='https://via.placeholder.com/150'">
+      </div>
+      <a href="#" class="see-more">See all offers »</a>
+    </div>
+    <div class="deal-card">
+      <h3>Bestselling Books</h3>
+      <div class="products">
+        <img class="prod-img" src="https://images-na.ssl-images-amazon.com/images/I/81YkqyaFVEL._AC_UL320_.jpg" alt="Book1" onerror="this.src='https://via.placeholder.com/150'">
+        <img class="prod-img" src="https://images-na.ssl-images-amazon.com/images/I/71mfQ4LUXlL._AC_UL320_.jpg" alt="Book2" onerror="this.src='https://via.placeholder.com/150'">
+        <img class="prod-img" src="https://images-na.ssl-images-amazon.com/images/I/71wvKXmqKdL._AC_UL320_.jpg" alt="Book3" onerror="this.src='https://via.placeholder.com/150'">
+        <img class="prod-img" src="https://images-na.ssl-images-amazon.com/images/I/71aG7a-JkXL._AC_UL320_.jpg" alt="Book4" onerror="this.src='https://via.placeholder.com/150'">
+      </div>
+      <a href="#" class="see-more">See all offers »</a>
+    </div>
+    <div class="deal-card">
+      <h3>Up to 40% off | Fashion</h3>
+      <div class="products">
+        <img class="prod-img" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200&q=80" alt="Shoes">
+        <img class="prod-img" src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=200&q=80" alt="Jacket">
+        <img class="prod-img" src="https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=200&q=80" alt="Watch">
+        <img class="prod-img" src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=200&q=80" alt="Bag">
+      </div>
+      <a href="#" class="see-more">See all offers »</a>
+    </div>
+    <div class="deal-card">
+      <h3>Home & Kitchen Deals</h3>
+      <div class="products">
+        <img class="prod-img" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&q=80" alt="Kitchen">
+        <img class="prod-img" src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=200&q=80" alt="Sofa">
+        <img class="prod-img" src="https://images.unsplash.com/photo-1565538810643-b5bdb714032a?w=200&q=80" alt="Light">
+        <img class="prod-img" src="https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=200&q=80" alt="Decor">
+      </div>
+      <a href="#" class="see-more">See all offers »</a>
+    </div>
+  </div>
+
+  <!-- DEALS OF THE DAY CAROUSEL -->
+  <div class="carousel-section">
+    <h2>⚡ Deals of the Day</h2>
+    <div class="carousel-wrap">
+      <button class="car-btn left" onclick="scrollCar('deal-car',-1)">&#10094;</button>
+      <div class="carousel"><div class="carousel-inner" id="deal-car">
+
+        <div class="product-card">
+          <div class="img-wrap"><img src="https://images-na.ssl-images-amazon.com/images/I/71gVbEBpFFL._AC_UL320_.jpg" alt="Samsung" onerror="this.style.display='none'"></div>
+          <div class="brand">Samsung</div>
+          <div class="name">Galaxy M34 5G (Midnight Blue, 6GB, 128GB)</div>
+          <div><span class="stars">★★★★☆</span><span class="rcount">(18,432)</span></div>
+          <div class="price-row"><span class="sym">₹</span><span class="amt">17,999</span><span class="orig">₹24,999</span><span class="off">28% off</span></div>
+          <div class="prime">✔ Prime FREE Delivery</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <div class="img-wrap"><img src="https://images-na.ssl-images-amazon.com/images/I/61dPCrzAAPL._AC_UL320_.jpg" alt="iPhone" onerror="this.style.display='none'"></div>
+          <div class="brand">Apple</div>
+          <div class="name">iPhone 15 (128GB) – Black</div>
+          <div><span class="stars">★★★★★</span><span class="rcount">(42,100)</span></div>
+          <div class="price-row"><span class="sym">₹</span><span class="amt">69,900</span><span class="orig">₹79,900</span><span class="off">13% off</span></div>
+          <div class="prime">✔ Prime FREE Delivery</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <div class="img-wrap"><img src="https://images-na.ssl-images-amazon.com/images/I/71jG+e7roXL._AC_UL320_.jpg" alt="Laptop" onerror="this.style.display='none'"></div>
+          <div class="brand">Lenovo</div>
+          <div class="name">IdeaPad Slim 3 i5 12th Gen 15.6" Laptop</div>
+          <div><span class="stars">★★★★☆</span><span class="rcount">(9,821)</span></div>
+          <div class="price-row"><span class="sym">₹</span><span class="amt">44,990</span><span class="orig">₹59,990</span><span class="off">25% off</span></div>
+          <div class="prime">✔ Prime FREE Delivery</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <div class="img-wrap"><img src="https://images-na.ssl-images-amazon.com/images/I/61CGHv6kmWL._AC_UL320_.jpg" alt="Sony" onerror="this.style.display='none'"></div>
+          <div class="brand">Sony</div>
+          <div class="name">WH-1000XM5 Wireless Noise Cancelling Headphones</div>
+          <div><span class="stars">★★★★★</span><span class="rcount">(24,100)</span></div>
+          <div class="price-row"><span class="sym">₹</span><span class="amt">26,990</span><span class="orig">₹34,990</span><span class="off">23% off</span></div>
+          <div class="prime">✔ Prime FREE Delivery</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <div class="img-wrap"><img src="https://images-na.ssl-images-amazon.com/images/I/71V5JopkfLL._AC_UL320_.jpg" alt="Watch" onerror="this.style.display='none'"></div>
+          <div class="brand">boAt</div>
+          <div class="name">Wave Flex Connect Smartwatch with Bluetooth Calling</div>
+          <div><span class="stars">★★★★☆</span><span class="rcount">(32,891)</span></div>
+          <div class="price-row"><span class="sym">₹</span><span class="amt">1,499</span><span class="orig">₹4,999</span><span class="off">70% off</span></div>
+          <div class="prime">✔ Prime FREE Delivery</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <div class="img-wrap"><img src="https://images-na.ssl-images-amazon.com/images/I/81Zt42ioCgL._AC_UL320_.jpg" alt="Kindle" onerror="this.style.display='none'"></div>
+          <div class="brand">Amazon</div>
+          <div class="name">Kindle Paperwhite (16 GB) – 6.8" display, adjustable warm light</div>
+          <div><span class="stars">★★★★★</span><span class="rcount">(19,500)</span></div>
+          <div class="price-row"><span class="sym">₹</span><span class="amt">13,999</span><span class="orig">₹16,999</span><span class="off">18% off</span></div>
+          <div class="prime">✔ Prime FREE Delivery</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <div class="img-wrap"><img src="https://images-na.ssl-images-amazon.com/images/I/61vFRuGBCgL._AC_UL320_.jpg" alt="Camera" onerror="this.style.display='none'"></div>
+          <div class="brand">Canon</div>
+          <div class="name">EOS 1500D 24.1MP DSLR Camera with 18-55mm Lens</div>
+          <div><span class="stars">★★★★☆</span><span class="rcount">(7,654)</span></div>
+          <div class="price-row"><span class="sym">₹</span><span class="amt">34,495</span><span class="orig">₹44,995</span><span class="off">23% off</span></div>
+          <div class="prime">✔ Prime FREE Delivery</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <div class="img-wrap"><img src="https://images-na.ssl-images-amazon.com/images/I/71de4W8+EqL._AC_UL320_.jpg" alt="iPad" onerror="this.style.display='none'"></div>
+          <div class="brand">Apple</div>
+          <div class="name">iPad (10th Gen) 10.9-inch, Wi-Fi, 64GB – Blue</div>
+          <div><span class="stars">★★★★★</span><span class="rcount">(15,230)</span></div>
+          <div class="price-row"><span class="sym">₹</span><span class="amt">34,900</span><span class="orig">₹44,900</span><span class="off">22% off</span></div>
+          <div class="prime">✔ Prime FREE Delivery</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+
+      </div></div>
+      <button class="car-btn right" onclick="scrollCar('deal-car',1)">&#10095;</button>
+    </div>
+  </div>
+
+  <!-- BANNER STRIP -->
+  <div class="banner-strip">
+    <div class="banner-card">
+      <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80" alt="Kitchen">
+      <div class="banner-info"><h3>Kitchen & Dining</h3><a href="#">Shop now »</a></div>
+    </div>
+    <div class="banner-card">
+      <img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=600&q=80" alt="Health">
+      <div class="banner-info"><h3>Health & Personal Care</h3><a href="#">Shop now »</a></div>
+    </div>
+    <div class="banner-card">
+      <img src="https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=600&q=80" alt="Toys">
+      <div class="banner-info"><h3>Toys & Games</h3><a href="#">Shop now »</a></div>
+    </div>
+  </div>
+
+  <!-- PROMO BANNERS -->
+  <div class="promo-row">
+    <div class="promo-banner" style="background:linear-gradient(135deg,#131921,#37475A);">
+      <div>
+        <h2>Amazon Prime</h2>
+        <p>FREE Delivery, Exclusive Deals & Prime Video</p>
+        <button>Try Prime Free</button>
+      </div>
+    </div>
+    <div class="promo-banner" style="background:linear-gradient(135deg,#c45500,#FF9900);">
+      <div>
+        <h2>Amazon Pay</h2>
+        <p>Pay with Amazon Pay & get ₹150 cashback</p>
+        <button>Know More</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORY GRID -->
+  <div class="category-grid">
+    <div class="cat-card">
+      <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300&q=80" alt="Mobiles">
+      <div class="name">Mobiles</div>
+    </div>
+    <div class="cat-card">
+      <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=300&q=80" alt="Laptops">
+      <div class="name">Laptops</div>
+    </div>
+    <div class="cat-card">
+      <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=300&q=80" alt="Fashion">
+      <div class="name">Fashion</div>
+    </div>
+    <div class="cat-card">
+      <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=300&q=80" alt="Home">
+      <div class="name">Home & Kitchen</div>
+    </div>
+    <div class="cat-card">
+      <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=300&q=80" alt="Books">
+      <div class="name">Books</div>
+    </div>
+    <div class="cat-card">
+      <img src="https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?w=300&q=80" alt="Gaming">
+      <div class="name">Gaming</div>
+    </div>
+  </div>
+
+  <!-- TODAY'S DEALS -->
+  <div class="deals-section">
+    <div class="deals-header">
+      <h2>Today's Deals</h2>
+      <a href="#">See all deals »</a>
+    </div>
+    <div class="deals-grid">
+      <div class="deal-item">
+        <div class="img-wrap"><img src="https://images-na.ssl-images-amazon.com/images/I/71gVbEBpFFL._AC_UL320_.jpg" alt="Redmi" onerror="this.style.display='none'"></div>
+        <div class="badge">62% off</div>
+        <div class="title">Redmi 12C 4GB RAM 64GB Storage</div>
+        <div class="price">₹7,999</div>
+        <div class="was">M.R.P: ₹20,999</div>
+        <div class="progress-bar"><div class="progress" style="width:74%"></div></div>
+        <div class="claimed">74% claimed</div>
+      </div>
+      <div class="deal-item">
+        <div class="img-wrap"><img src="https://images-na.ssl-images-amazon.com/images/I/61CGHv6kmWL._AC_UL320_.jpg" alt="JBL" onerror="this.style.display='none'"></div>
+        <div class="badge">55% off</div>
+        <div class="title">JBL Tune 510BT Wireless Headphones</div>
+        <div class="price">₹2,249</div>
+        <div class="was">M.R.P: ₹4,999</div>
+        <div class="progress-bar"><div class="progress" style="width:60%"></div></div>
+        <div class="claimed">60% claimed</div>
+      </div>
+      <div class="deal-item">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=200&q=80" alt="Yoga Mat"></div>
+        <div class="badge">40% off</div>
+        <div class="title">Boldfit Yoga Mat Anti Slip 6mm</div>
+        <div class="price">₹599</div>
+        <div class="was">M.R.P: ₹999</div>
+        <div class="progress-bar"><div class="progress" style="width:48%"></div></div>
+        <div class="claimed">48% claimed</div>
+      </div>
+      <div class="deal-item">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200&q=80" alt="Shoes"></div>
+        <div class="badge">65% off</div>
+        <div class="title">Puma Men's Running Shoes (Size 6–11)</div>
+        <div class="price">₹1,049</div>
+        <div class="was">M.R.P: ₹2,999</div>
+        <div class="progress-bar"><div class="progress" style="width:35%"></div></div>
+        <div class="claimed">35% claimed</div>
+      </div>
+      <div class="deal-item">
+        <div class="img-wrap"><img src="https://images-na.ssl-images-amazon.com/images/I/81aG+AkAuHL._AC_UL320_.jpg" alt="Book" onerror="this.style.display='none'"></div>
+        <div class="badge">47% off</div>
+        <div class="title">Atomic Habits – James Clear</div>
+        <div class="price">₹420</div>
+        <div class="was">M.R.P: ₹799</div>
+        <div class="progress-bar"><div class="progress" style="width:88%"></div></div>
+        <div class="claimed">88% claimed</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOOKS CAROUSEL -->
+  <div class="carousel-section">
+    <h2>📚 Bestsellers in Books</h2>
+    <div class="carousel-wrap">
+      <button class="car-btn left" onclick="scrollCar('book-car',-1)">&#10094;</button>
+      <div class="carousel"><div class="carousel-inner" id="book-car">
+
+        <div class="product-card">
+          <div class="img-wrap"><img src="https://images-na.ssl-images-amazon.com/images/I/81YkqyaFVEL._AC_UL320_.jpg" alt="Atomic Habits" onerror="this.style.display='none'"></div>
+          <div class="brand">James Clear</div>
+          <div class="name">Atomic Habits – Tiny Changes, Remarkable Results</div>
+          <div><span class="stars">★★★★★</span><span class="rcount">(1,23,456)</span></div>
+          <div class="price-row"><span class="sym">₹</span><span class="amt">420</span><span class="orig">₹799</span><span class="off">47% off</span></div>
+          <div class="prime">✔ Prime FREE Delivery</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <div class="img-wrap"><img src="https://images-na.ssl-images-amazon.com/images/I/71mfQ4LUXlL._AC_UL320_.jpg" alt="Psychology of Money" onerror="this.style.display='none'"></div>
+          <div class="brand">Morgan Housel</div>
+          <div class="name">The Psychology of Money</div>
+          <div><span class="stars">★★★★★</span><span class="rcount">(87,210)</span></div>
+          <div class="price-row"><span class="sym">₹</span><span class="amt">355</span><span class="orig">₹599</span><span class="off">41% off</span></div>
+          <div class="prime">✔ Prime FREE Delivery</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <div class="img-wrap"><img src="https://images-na.ssl-images-amazon.com/images/I/71wvKXmqKdL._AC_UL320_.jpg" alt="Rich Dad Poor Dad" onerror="this.style.display='none'"></div>
+          <div class="brand">Robert T. Kiyosaki</div>
+          <div class="name">Rich Dad Poor Dad</div>
+          <div><span class="stars">★★★★☆</span><span class="rcount">(56,700)</span></div>
+          <div class="price-row"><span class="sym">₹</span><span class="amt">299</span><span class="orig">₹450</span><span class="off">34% off</span></div>
+          <div class="prime">✔ Prime FREE Delivery</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <div class="img-wrap"><img src="https://images-na.ssl-images-amazon.com/images/I/71aG7a-JkXL._AC_UL320_.jpg" alt="Ikigai" onerror="this.style.display='none'"></div>
+          <div class="brand">Héctor García</div>
+          <div class="name">Ikigai – The Japanese Secret to a Long and Happy Life</div>
+          <div><span class="stars">★★★★★</span><span class="rcount">(44,980)</span></div>
+          <div class="price-row"><span class="sym">₹</span><span class="amt">189</span><span class="orig">₹399</span><span class="off">53% off</span></div>
+          <div class="prime">✔ Prime FREE Delivery</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <div class="img-wrap"><img src="https://images-na.ssl-images-amazon.com/images/I/51Z0nLAfLmL._AC_UL320_.jpg" alt="Alchemist" onerror="this.style.display='none'"></div>
+          <div class="brand">Paulo Coelho</div>
+          <div class="name">The Alchemist</div>
+          <div><span class="stars">★★★★★</span><span class="rcount">(98,000)</span></div>
+          <div class="price-row"><span class="sym">₹</span><span class="amt">210</span><span class="orig">₹350</span><span class="off">40% off</span></div>
+          <div class="prime">✔ Prime FREE Delivery</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <div class="img-wrap"><img src="https://images-na.ssl-images-amazon.com/images/I/71mfQ4LUXlL._AC_UL320_.jpg" alt="Deep Work" onerror="this.style.display='none'"></div>
+          <div class="brand">Cal Newport</div>
+          <div class="name">Deep Work – Rules for Focused Success in a Distracted World</div>
+          <div><span class="stars">★★★★☆</span><span class="rcount">(31,450)</span></div>
+          <div class="price-row"><span class="sym">₹</span><span class="amt">379</span><span class="orig">₹599</span><span class="off">37% off</span></div>
+          <div class="prime">✔ Prime FREE Delivery</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <div class="img-wrap"><img src="https://images-na.ssl-images-amazon.com/images/I/71wvKXmqKdL._AC_UL320_.jpg" alt="Think Like Monk" onerror="this.style.display='none'"></div>
+          <div class="brand">Jay Shetty</div>
+          <div class="name">Think Like a Monk – Train Your Mind for Peace and Purpose</div>
+          <div><span class="stars">★★★★★</span><span class="rcount">(22,100)</span></div>
+          <div class="price-row"><span class="sym">₹</span><span class="amt">299</span><span class="orig">₹499</span><span class="off">40% off</span></div>
+          <div class="prime">✔ Prime FREE Delivery</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+
+      </div></div>
+      <button class="car-btn right" onclick="scrollCar('book-car',1)">&#10095;</button>
+    </div>
+  </div>
+
+  <!-- FASHION CAROUSEL -->
+  <div class="carousel-section">
+    <h2>👗 Trending in Fashion</h2>
+    <div class="carousel-wrap">
+      <button class="car-btn left" onclick="scrollCar('fashion-car',-1)">&#10094;</button>
+      <div class="carousel"><div class="carousel-inner" id="fashion-car">
+
+        <div class="product-card">
+          <div class="img-wrap"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&q=80" alt="Nike"></div>
+          <div class="brand">Nike</div>
+          <div class="name">Air Max 270 Running Shoes – Men's</div>
+          <div><span class="stars">★★★★★</span><span class="rcount">(8,240)</span></div>
+          <div class="price-row"><span class="sym">₹</span><span class="amt">6,995</span><span class="orig">₹9,995</span><span class="off">30% off</span></div>
+          <div class="prime">✔ Prime FREE Delivery</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <div class="img-wrap"><img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=300&q=80" alt="Jacket"></div>
+          <div class="brand">Roadster</div>
+          <div class="name">Men's Solid Bomber Jacket</div>
+          <div><span class="stars">★★★★☆</span><span class="rcount">(3,120)</span></div>
+          <div class="price-row"><span class="sym">₹</span><span class="amt">1,299</span><span class="orig">₹2,999</span><span class="off">57% off</span></div>
+          <div class="prime">✔ Prime FREE Delivery</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <div class="img-wrap"><img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=300&q=80" alt="Bag"></div>
+          <div class="brand">Lavie</div>
+          <div class="name">Women's Tote Handbag – Large Capacity</div>
+          <div><span class="stars">★★★★☆</span><span class="rcount">(6,780)</span></div>
+          <div class="price-row"><span class="sym">₹</span><span class="amt">899</span><span class="orig">₹1,999</span><span class="off">55% off</span></div>
+          <div class="prime">✔ Prime FREE Delivery</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <div class="img-wrap"><img src="https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=300&q=80" alt="Watch"></div>
+          <div class="brand">Fossil</div>
+          <div class="name">Men's Gen 6 Smartwatch – Dark Brown Leather</div>
+          <div><span class="stars">★★★★★</span><span class="rcount">(4,560)</span></div>
+          <div class="price-row"><span class="sym">₹</span><span class="amt">14,995</span><span class="orig">₹22,995</span><span class="off">35% off</span></div>
+          <div class="prime">✔ Prime FREE Delivery</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <div class="img-wrap"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&q=80" alt="Watch2"></div>
+          <div class="brand">Titan</div>
+          <div class="name">Analog Stainless Steel Watch for Men</div>
+          <div><span class="stars">★★★★☆</span><span class="rcount">(11,200)</span></div>
+          <div class="price-row"><span class="sym">₹</span><span class="amt">3,495</span><span class="orig">₹5,995</span><span class="off">42% off</span></div>
+          <div class="prime">✔ Prime FREE Delivery</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <div class="img-wrap"><img src="https://images.unsplash.com/photo-1588099768523-f4e6a5679d88?w=300&q=80" alt="Sunglasses"></div>
+          <div class="brand">Ray-Ban</div>
+          <div class="name">New Wayfarer Classic Sunglasses – Black Frame</div>
+          <div><span class="stars">★★★★★</span><span class="rcount">(9,870)</span></div>
+          <div class="price-row"><span class="sym">₹</span><span class="amt">5,490</span><span class="orig">₹7,490</span><span class="off">27% off</span></div>
+          <div class="prime">✔ Prime FREE Delivery</div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+
+      </div></div>
+      <button class="car-btn right" onclick="scrollCar('fashion-car',1)">&#10095;</button>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-back" onclick="window.scrollTo({top:0,behavior:'smooth'})">▲ Back to top</div>
+  <div class="footer-links">
+    <div class="footer-col">
+      <h3>Get to Know Us</h3>
+      <a href="#">About Amazon</a><a href="#">Careers</a>
+      <a href="#">Press Releases</a><a href="#">Amazon Science</a>
+    </div>
+    <div class="footer-col">
+      <h3>Connect with Us</h3>
+      <a href="#">Facebook</a><a href="#">Twitter</a><a href="#">Instagram</a>
+    </div>
+    <div class="footer-col">
+      <h3>Make Money with Us</h3>
+      <a href="#">Sell on Amazon</a><a href="#">Amazon Associates</a>
+      <a href="#">Fulfilment by Amazon</a><a href="#">Advertise Your Products</a>
+    </div>
+    <div class="footer-col">
+      <h3>Let Us Help You</h3>
+      <a href="#">Your Account</a><a href="#">Returns Centre</a>
+      <a href="#">100% Purchase Protection</a><a href="#">Amazon App Download</a>
+      <a href="#">Help</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-logo">amazon<span>.</span>in</div>
+    <div class="footer-legal">
+      <a href="#">Conditions of Use & Sale</a>
+      <a href="#">Privacy Notice</a>
+      <a href="#">Interest-Based Ads</a>
+      © 1996–2026, Amazon.com, Inc. or its affiliates
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Hero slider
+  let cur = 0;
+  const totalSlides = 3;
+  function goSlide(n) {
+    cur = n;
+    document.getElementById('heroSlides').style.transform = `translateX(-${cur * 100}%)`;
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === cur));
+  }
+  function slideHero(dir) { goSlide((cur + dir + totalSlides) % totalSlides); }
+  setInterval(() => slideHero(1), 5000);
+
+  // Carousel scroll
+  const carOffsets = {};
+  function scrollCar(id, dir) {
+    const el = document.getElementById(id);
+    if (!carOffsets[id]) carOffsets[id] = 0;
+    const cardW = 194;
+    const maxOffset = el.scrollWidth - el.parentElement.clientWidth;
+    carOffsets[id] = Math.max(0, Math.min(carOffsets[id] + dir * cardW * 3, maxOffset));
+    el.style.transform = `translateX(-${carOffsets[id]}px)`;
+  }
+
+  // Add to cart
+  document.querySelectorAll('.add-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      this.textContent = '✔ Added!';
+      this.style.background = '#2ecc71';
+      this.style.borderColor = '#27ae60';
+      setTimeout(() => {
+        this.textContent = 'Add to Cart';
+        this.style.background = '#FFD814';
+        this.style.borderColor = '#FCD200';
+      }, 1500);
+    });
+  });
+</script>
+</body>
+</html>
